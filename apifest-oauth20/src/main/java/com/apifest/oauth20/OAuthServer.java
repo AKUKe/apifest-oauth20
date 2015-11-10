@@ -102,7 +102,7 @@ public final class OAuthServer {
         if (!loadConfig(builder)) {
             System.exit(1);
         }
-        log.info("Initializing database ...");
+        log.info("Initializing "+builder.getDatabaseType()+" database ...");
         DBManagerFactory.init(builder);
         builder.setServerCredentials(setAuthServerContext(builder));
         context = builder.build();
@@ -291,19 +291,25 @@ public final class OAuthServer {
             setHostAndPort(props, builder);
 
             builder.setDatabaseType(props.getProperty("oauth20.database", DBManagerFactory.DEFAULT_DB));
-            builder.setRedisMaster(props.getProperty("redis.master"));
-            builder.setRedisSentinels(props.getProperty("redis.sentinels"));
-            builder.setRedisPassword(props.getProperty("redis.password"));
-            String mongoDBUri = props.getProperty("mongodb.uri");
-            if (mongoDBUri == null || mongoDBUri.length() == 0) {
-                mongoDBUri = "localhost";
+
+            if (DBManagerFactory.REDIS_DB.equalsIgnoreCase(builder.getDatabaseType())) {
+                builder.setRedisMaster(props.getProperty("redis.master"));
+                builder.setRedisSentinels(props.getProperty("redis.sentinels"));
+                builder.setRedisPassword(props.getProperty("redis.password"));
+            } else if (DBManagerFactory.MONGO_DB.equalsIgnoreCase(builder.getDatabaseType())) {
+                String mongoDBUri = props.getProperty("mongodb.uri");
+                if (mongoDBUri == null || mongoDBUri.length() == 0) {
+                    mongoDBUri = "localhost";
+                }
+                builder.setMongoDBUri(mongoDBUri);
+            } else {
+                builder.setHazelcastClusterName(props.getProperty("hazelcast.cluster.name", HazelcastConfigFactory.HAZELCAST_GROUP_NAME));
+                builder.setHazelcastPassword(props.getProperty("hazelcast.password", GroupConfig.DEFAULT_GROUP_PASSWORD));
+                builder.setHazelcastClusterMembers(props.getProperty("hazelcast.cluster.members"));
             }
-            builder.setMongoDBUri(mongoDBUri);
 
-            builder.setHazelcastClusterName(props.getProperty("hazelcast.cluster.name", HazelcastConfigFactory.HAZELCAST_GROUP_NAME));
-
-            builder.setHazelcastPassword(props.getProperty("hazelcast.password", GroupConfig.DEFAULT_GROUP_PASSWORD));
-            builder.setHazelcastClusterMembers(props.getProperty("hazelcast.cluster.members"));
+            String mode = (String) props.get("oauth20.production.mode");
+            builder.setProductionMode(Boolean.parseBoolean(mode));
 
             Boolean https = Boolean.parseBoolean((String) props.get("oauth20.https"));
 
@@ -314,11 +320,9 @@ public final class OAuthServer {
             }
             builder.setHttps(https);
 
-            String mode = (String) props.get("oauth20.production.mode");
-            builder.setProductionMode(Boolean.parseBoolean(mode));
             String subnetsString = (String) props.get("oauth20.subnets.whitelist");
             if (subnetsString != null) {
-                builder.setAllowedIPs(SubnetRange.parse(subnetsString));
+                builder.setAllowedIPs(SubnetRange.parse(subnetsString, true));
             }
         } catch (Exception e) {            
 			log.error("Cannot load properties file", e);

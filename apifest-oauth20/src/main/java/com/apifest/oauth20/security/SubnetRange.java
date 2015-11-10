@@ -32,12 +32,16 @@ public class SubnetRange {
 		return false;
 	}
 	
-	public static SubnetRange parse(String text) throws IllegalArgumentException {
+	public static SubnetRange parse(String text, boolean inclusiveHostCount) throws IllegalArgumentException {
 		String[] cidrs = pattern.split(text);
 		SubnetRange sr = new SubnetRange();
 		
 		for (String cidr : cidrs) {
+			if (cidr.indexOf('/') < 0) {
+				cidr = cidr + "/32";
+			}
 			SubnetUtils net = new SubnetUtils(cidr);
+			net.setInclusiveHostCount(inclusiveHostCount);
 
 			if (net == null) {
 				throw new IllegalArgumentException("Invalid subnet : " + cidr);
