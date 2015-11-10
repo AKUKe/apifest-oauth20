@@ -104,7 +104,7 @@ public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 			String addr = ((InetSocketAddress) ctx.getChannel().getRemoteAddress()).getAddress().getHostAddress();
 			
 			if (allowedIPs != null && !allowedIPs.inRange(addr)) {
-				log.info("Unauthorized access to "+rawUri+" from "+addr+" ...");
+                log.info("Unauthorized access to "+rawUri+" from ip "+addr+" (not in allowed range) ...");
 				HttpResponse unauthorizedResponse = Response.createResponse(HttpResponseStatus.FORBIDDEN, "Unauthorized access");
 				throw new RestrictedAccessException(unauthorizedResponse);
 			}

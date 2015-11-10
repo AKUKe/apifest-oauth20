@@ -110,7 +110,7 @@ public class MongoDBManager implements DBManager {
         if (result != null) {
             Map<String, Object> mapLoaded = result.toMap();
             ClientCredentials loadedCreds = ClientCredentials.loadFromMap(mapLoaded);
-            log.debug(loadedCreds.getName());
+            log.debug("Found credentials for clientId : "+loadedCreds.getName());
             return loadedCreds;
         }
 
@@ -129,7 +129,7 @@ public class MongoDBManager implements DBManager {
 		if (result != null) {
             Map<String, Object> mapLoaded = result.toMap();
             ClientCredentials loadedCreds = ClientCredentials.loadFromMap(mapLoaded);
-            log.debug(loadedCreds.getName());
+            log.debug("Found credentials for clientId : "+loadedCreds.getName());
             return loadedCreds;
         }
 
