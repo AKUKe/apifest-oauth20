@@ -351,7 +351,7 @@ public class RedisDBManager implements DBManager {
     public boolean deleteClientApp(String clientId) {
         String key = CLIENT_CREDENTIALS_PREFIX_NAME + clientId;
         Jedis jedis = pool.getResource();
-        Long deleted = jedis.hdel(key);
+        Long deleted = jedis.del(key);
         pool.returnResource(jedis);
 
         // 1 if deleted, 0 - nothing deleted
