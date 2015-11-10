@@ -68,14 +68,19 @@ public final class Response {
 
     public static HttpResponse createResponse(HttpResponseStatus status, String message) {
         HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, status);
+        HttpHeaders headers = response.headers();
+        headers.set(HttpHeaders.Names.CONTENT_TYPE, APPLICATION_JSON);
+        headers.set(HttpHeaders.Names.CACHE_CONTROL, HttpHeaders.Values.NO_STORE);
+        headers.set(HttpHeaders.Names.PRAGMA, HttpHeaders.Values.NO_CACHE);
+
         if (message != null) {
             ChannelBuffer buf = ChannelBuffers.copiedBuffer(message.getBytes(CharsetUtil.UTF_8));
             response.setContent(buf);
-            response.headers().set(HttpHeaders.Names.CONTENT_TYPE, APPLICATION_JSON);
-            response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, buf.array().length);
+            headers.set(HttpHeaders.Names.CONTENT_LENGTH, buf.array().length);
+        } else {
+            headers.set(HttpHeaders.Names.CONTENT_LENGTH, 0);
         }
-        response.headers().set(HttpHeaders.Names.CACHE_CONTROL, HttpHeaders.Values.NO_STORE);
-        response.headers().set(HttpHeaders.Names.PRAGMA, HttpHeaders.Values.NO_CACHE);
+
         return response;
     }
 }
