@@ -302,7 +302,7 @@ public final class OAuthServer {
             } else if (DBManagerFactory.MONGO_DB.equalsIgnoreCase(builder.getDatabaseType())) {
                 String mongoDBUri = props.getProperty("mongodb.uri");
                 if (mongoDBUri == null || mongoDBUri.length() == 0) {
-                    mongoDBUri = "localhost";
+                    mongoDBUri = "mongodb://localhost";
                 }
                 builder.setMongoDBUri(mongoDBUri);
             } else {
