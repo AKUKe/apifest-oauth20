@@ -18,6 +18,7 @@ package com.apifest.oauth20;
 
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.testng.Assert.assertEquals;
 
@@ -61,7 +62,7 @@ public class ResponseTest {
         assertEquals(response.headers().get(HttpHeaders.Names.CONTENT_LENGTH),
                 String.valueOf(ClientCredentialsService.REGISTER_APP_NAME_OR_SCOPE_OR_URI_IS_NULL.getBytes().length));
         assertEquals(response.headers().get(HttpHeaders.Names.CONTENT_TYPE), Response.APPLICATION_JSON);
-        verify(ex).getMessage();
+        verify(ex, times(2)).getMessage();
     }
 
     @Test

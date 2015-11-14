@@ -24,6 +24,8 @@ import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jboss.netty.handler.codec.http.HttpVersion;
 import org.jboss.netty.util.CharsetUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Contains all supported responses and response messages.
@@ -31,6 +33,8 @@ import org.jboss.netty.util.CharsetUtil;
  * @author Rossitsa Borissova
  */
 public final class Response {
+
+    private static final Logger log = LoggerFactory.getLogger(Response.class);
 
     public static final String APPLICATION_JSON = "application/json";
 
@@ -59,6 +63,7 @@ public final class Response {
     }
 
     public static HttpResponse createOAuthExceptionResponse(OAuthException ex) {
+        log.error("Exception in oauth request - "+ex.getHttpStatus()+" - "+ex.getMessage());
         return createResponse(ex.getHttpStatus(), ex.getMessage());
     }
 
