@@ -68,7 +68,7 @@ You can define the host and the port in the apifest-oauth.properties file using 
 You can set the server to run in SSL only mode if setting ***oauth20.https*** to true  
 ***oauth20.keystore.path*** and ***oauth20.keystore.password*** allow you to set the ssl certificate for the server
 
-You can set the server to run in production mode, which will restrict the access to authenticated uers (see /oauth20/login endpoint) to the endpoints used for sensitive administration (see endpoint descriptions at the end)
+You can set the server to run in **production mode**, which will restrict the access to authenticated users (see /oauth20/login endpoint) to the administration endpoints (see endpoint descriptions & access restrictions at the end)
 
 ***oauth20.production.mode***
 
