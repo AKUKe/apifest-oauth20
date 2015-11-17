@@ -1,33 +1,16 @@
-#ApiFest OAuth 2.0 Server and Mapping
-ApiFest consists of two main parts - the ApiFest OAuth 2.0 an OAuth 2.0 server and the ApiFest Mapping Server.
-
-##ApiFest Mapping Server
-The ApiFest Mapping Server is for people who have APIs and want to expose them to the world in a safe and convenient way.
-The ApiFest Mapping Server is used to translate between the outside world and your internal systems. It helps you keep a consistent API facade.
-
-###Features
-- mappings are described in xml
-- can validate and authorize requests using the ApiFest OAuth20 Server
-- out-of-the-box flexible mapping options - several versions support, different hosts to which API requests could be directed to
-- easy to extend and customize
-- customizable error messages and responses
-- "online" change of all configurations
-- unlimited horizontal scalability
-
-
 ##ApiFest OAuth 2.0 Server
 The ApiFest OAuth 2.0 Server implements OAuth 2.0 server side as per http://tools.ietf.org/html/rfc6749.
-It enables the usage of access tokens in ApiFest Mapping Server.
+It is notably used to provide access tokens in ApiFest Mapping Server see https://github.com/apifest/apifest.
 
 ###Features
-- register new client app
+- register/delete client apps
 - generate access token using auth code
 - generate access token using username and password - grant_type=password
 - generate access token using client credentials - grant_type=client_credentials
 - generate access token using refresh token - grant_type=refresh_token
 - revoke access token
 - validate access token
-- pluggable storage (currently supports MongoDB and Redis)
+- pluggable storage (currently supports Hazelcast, MongoDB and Redis)
 - unlimited horizontal scalability
 
 
