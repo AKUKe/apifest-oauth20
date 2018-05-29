@@ -109,8 +109,9 @@ The custom user authentication class will be loaded when it's name is provided b
 If for some reason, you need to support additional custom grant_type, you can set it's classname using the property ***custom.grant_type.class***
 
 ##ApiFest OAuth 2.0 Server Endpoints
+
 | Name | Description | Admin restricted access |
-:------------- | :------------- | :-------------:
+|--- | --- | --- |
 | */oauth20/login* | logs an user using provided access_token and checking credentials against configured authenticator class to access restricted endpoints when running in production mode | :white_check_mark: |
 | */oauth20/applications* | registers client applications (POST method), returns all client applications info (GET method) | :white_check_mark: |
 | */oauth20/applications/[client_id]* | returns client application info (GET method), updates a client application (PUT method), deletes a client application (DELETE method) | :white_check_mark: |
