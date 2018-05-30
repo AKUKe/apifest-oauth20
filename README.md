@@ -13,7 +13,7 @@ The ApiFest OAuth 2.0 Server implements OAuth 2.0 server side as per http://tool
 - unlimited horizontal scalability
 
 
-#Start ApiFest OAuth 2.0 Server
+# Start ApiFest OAuth 2.0 Server
 
 Start the ApiFest OAuth 2.0 Server with the following command:
 
@@ -108,7 +108,7 @@ The custom user authentication class will be loaded when it's name is provided b
 
 If for some reason, you need to support additional custom grant_type, you can set it's classname using the property ***custom.grant_type.class***
 
-##ApiFest OAuth 2.0 Server Endpoints
+## ApiFest OAuth 2.0 Server Endpoints
 
 | Name | Description | Admin restricted access |
 |--- | --- | --- |
