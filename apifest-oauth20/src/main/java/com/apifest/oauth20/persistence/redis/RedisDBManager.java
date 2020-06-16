@@ -59,7 +59,6 @@ public class RedisDBManager implements DBManager {
         String[] sentinelsList = sentinelsAsString.split(",");
         Set<String> sentinels = new HashSet<String>(Arrays.asList(sentinelsList));
         pool = password == null ? new JedisSentinelPool(master, sentinels) : new JedisSentinelPool(master, sentinels, password);
-
         //Jedis jedis = pool.getResource();
         //storeAuthCodeSHA = jedis.scriptLoad(storeAuthCodeScript);
         //pool.returnResource(jedis);
